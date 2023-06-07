@@ -6,18 +6,7 @@
   collections:
   - f5networks.f5_modules
   
-  vars:
-    bigip_provider:
-      user: "{{ user }}"
-      password: "{{ password }}"
-      server: "{{ ansible_host }}"
-      server_port: 443
-      validate_certs: false
-      no_f5_teem: yes
-    is_active: "{{ bigip_gather_var.devices | selectattr('self', 'equalto', 'yes') | map(attribute='failover_state') | first == 'active' }}"
-    failover_device_group: "{{ bigip_gather_var.device_groups | selectattr('type', 'equalto', 'sync-failover')  | map(attribute='name') | first | default ('None') }}"
-
-
+ 
   roles: 
     #/////////////////////////////////////////////////////////////////
     #Role 1
