@@ -1,0 +1,15 @@
+---
+
+- hosts: all
+  gather_facts: false
+  remote_user: root
+#- hosts: localhost
+
+  roles: 
+    #/////////////////////////////////////////////////////////////////
+    #Role 1
+    #Purpose of this role is to capture device facts and license related info
+    #This information will be used to prepare devices for the upgrade
+    #/////////////////////////////////////////////////////////////////  
+  - licensefacts
+

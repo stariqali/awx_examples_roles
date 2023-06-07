@@ -1,0 +1,25 @@
+---
+- name: Gather facts (f5)
+  bigip_device_info:
+    provider: "{{ provider }}"
+    gather_subset:
+      - system-info
+      - devices
+  register: dev_fact
+
+- name: This can be used to print all facts
+  debug:
+    var: dev_fact
+
+- name: Task 1 - Display Device Type
+  debug:
+    var: dev_fact['system_info']['marketing_name']
+
+- name: Task 2 - Platform Name
+  debug:
+    var: dev_fact['system_info']['platform']
+
+- name: Task3.1 - Capture Service Check Date
+  shell: tmsh show sys version | grep "  Version" | awk '{print $2}'
+  register: code_version
+  tags: code
