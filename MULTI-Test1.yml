@@ -25,16 +25,17 @@
   - name: Get bigip config Information
     bigip_device_info:
       gather_subset: 
+      - system-info
       - devices
       - device-groups
       provider: "{{ bigip_provider }}"
-    register: bigip_gather_var2
+    register: bigip_gather_var
     retries: 3
     delay: 3
     
   - name: This can be used to print facts
     debug:
-      var: bigip_gather_var2
+      var: bigip_gather_var
   
   - name: This can be used to print facts
     debug:
@@ -42,7 +43,7 @@
 
   - name: This can be used to print facts
     debug:
-      var: bigip_gather_var['devices']['marketing_name']
+      var: bigip_gather_var['system_info']['product_version']
 
   - name: This can be used to print facts
     debug:
@@ -56,4 +57,8 @@
   - name: This can be used to print facts
     debug:
       var: code_version
+  
+- name: Task 2 - Platform Name
+  debug:
+    var: bigip_gather_var['system_info']['platform']
   
