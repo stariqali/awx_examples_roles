@@ -39,7 +39,7 @@
   
   - name: This can be used to print facts
     debug:
-      var: bigip_gather_var['devices']['hostname']
+      var: bigip_gather_var['devices''[0]']['hostname']
 
   - name: This can be used to print facts
     debug:
