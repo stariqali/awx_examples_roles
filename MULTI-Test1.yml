@@ -20,6 +20,7 @@
       password: "{{ password }}"
       server_port: 443
       validate_certs: false
+      no_f5_teem: yes
     date: "{{ lookup('pipe', 'date +%Y%m%d-%H%M') }}"
 
     
