@@ -61,10 +61,10 @@
     debug:
       var: bigip_gather_var['devices'][0]['software_version']
 
-  - name: This can be used to print facts
-    debug:
-      var: bigip_gather_var['devices'][0]['platform_id']
-      
+  #- name: This can be used to print facts
+  #  debug:
+  #    var: bigip_gather_var['devices'][0]['platform_id']
+  #    
   #- name: Task3.1 - Capture Service Check Date
   #  shell: tmsh show sys version | grep "  Version" | awk '{print $2}'
   #  register: code_version
