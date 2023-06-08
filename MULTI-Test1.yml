@@ -28,7 +28,7 @@
       - devices
       - device-groups
       provider: "{{ bigip_provider }}"
-    register: bigip_gather_var
+    register: bigip_gather_var2
     retries: 3
     delay: 3
     
