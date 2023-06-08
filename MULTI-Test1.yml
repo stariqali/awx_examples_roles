@@ -31,3 +31,8 @@
     register: bigip_gather_var
     retries: 3
     delay: 3
+    
+  - name: This can be used to print facts
+    debug:
+      var: bigip_gather_var
+     
