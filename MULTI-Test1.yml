@@ -1,9 +1,7 @@
 ---
-#- modify sys db ui.advisory.color { value "Green" }
-#- modify sys db ui.advisory.color { value "Red" }   
-#Green=prod/stable     Red=maintenance/warning     Blue=in deployment
       
-- hosts: all
+- name: Multi-Test1
+  hosts: all
   any_errors_fatal: true
   connection: local
   gather_facts: false
@@ -14,12 +12,16 @@
     http_proxy: ''
     
   vars:
+    user: admin
+    password: "{{ password }}"
     bigip_provider:
-      user: "{{ user }}"
-      password: "{{ password }}"
       server: "{{ ansible_host }}"
+      user: admin
+      password: "{{ password }}"
       server_port: 443
       validate_certs: false
+      no_f5_teem: true
+    date: "{{ lookup('pipe', 'date +%Y%m%d-%H%M') }}"
 
     
   tasks:
