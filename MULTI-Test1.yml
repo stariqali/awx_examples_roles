@@ -1,7 +1,6 @@
 ---
-      
-- name: Multi-Test1
-  hosts: all
+
+- hosts: all
   any_errors_fatal: true
   connection: local
   gather_facts: false
@@ -12,27 +11,23 @@
     http_proxy: ''
     
   vars:
-    user: admin
-    password: "{{ password }}"
     bigip_provider:
-      server: "{{ ansible_host }}"
-      user: admin
+      user: "{{ user }}"
       password: "{{ password }}"
+      server: "{{ ansible_host }}"
       server_port: 443
       validate_certs: false
       no_f5_teem: yes
-    date: "{{ lookup('pipe', 'date +%Y%m%d-%H%M') }}"
+    is_active: "{{ bigip_gather_var.devices | selectattr('self', 'equalto', 'yes') | map(attribute='failover_state') | first == 'active' }}"
+    failover_device_group: "{{ bigip_gather_var.device_groups | selectattr('type', 'equalto', 'sync-failover')  | map(attribute='name') | first | default ('None') }}"
 
-    
   tasks:
-  - name: Gather facts (f5)
+  - name: Get bigip config Information
     bigip_device_info:
-      provider: "{{ provider }}"
-      gather_subset:
-        - system-info
-        - devices
-    register: dev_fact
-  
-  - name: This can be used to print all facts
-    debug:
-      var: dev_fact
+      gather_subset: 
+      - devices
+      - device-groups
+      provider: "{{ bigip_provider }}"
+    register: bigip_gather_var
+    retries: 3
+    delay: 3
