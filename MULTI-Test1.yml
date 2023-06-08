@@ -32,7 +32,10 @@
     retries: 3
     delay: 3
     
+  #- name: This can be used to print facts
+  #  debug:
+  #    var: bigip_gather_var
+  
   - name: This can be used to print facts
     debug:
-      var: bigip_gather_var
-     
+      var: bigip_gather_var['system_info']['marketing_name']
