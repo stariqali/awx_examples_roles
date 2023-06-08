@@ -58,7 +58,7 @@
     debug:
       var: code_version
   
-- name: Task 2 - Platform Name
-  debug:
-    var: bigip_gather_var['system_info']['platform']
+  - name: Task 2 - Platform Name
+    debug:
+      var: bigip_gather_var['system_info']['platform']
   
