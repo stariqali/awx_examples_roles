@@ -34,7 +34,7 @@
     
   - name: This can be used to print facts
     debug:
-      var: bigip_gather_var
+      var: bigip_gather_var2
   
   - name: This can be used to print facts
     debug:
