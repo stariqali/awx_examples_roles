@@ -48,6 +48,10 @@
   - name: This can be used to print facts
     debug:
       var: bigip_gather_var['system_info']['platform']
+
+  - name: This can be used to print facts
+    debug:
+      var: bigip_gather_var['system_info']['chassis_serial']
       
   - name: Task3.1 - Capture Service Check Date
     shell: tmsh show sys version | grep "  Version" | awk '{print $2}'
