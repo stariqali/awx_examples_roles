@@ -42,7 +42,7 @@
 
   - name: This can be used to print facts
     debug:
-      var: bigip_gather_var['ansible_net_devices']['marketing_name']
+      var: bigip_gather_var['devices']['marketing_name']
 
   - name: This can be used to print facts
     debug:
