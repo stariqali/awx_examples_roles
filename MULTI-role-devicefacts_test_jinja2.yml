@@ -21,11 +21,72 @@
     is_active: "{{ bigip_gather_var.devices | selectattr('self', 'equalto', 'yes') | map(attribute='failover_state') | first == 'active' }}"
     failover_device_group: "{{ bigip_gather_var.device_groups | selectattr('type', 'equalto', 'sync-failover')  | map(attribute='name') | first | default ('None') }}"
 
+    csv_path: /tmp
+    csv_filename: device_facts.csv
+    headers: Hostname,Device Type,TMOS Tersion,Platform, Serial Number, Software Version
 
-  roles: 
-    #/////////////////////////////////////////////////////////////////
-    #Role 1
-    #Purpose of this role is to capture device facts and license related info
-    #This information will be used to prepare devices for the upgrade
-    #/////////////////////////////////////////////////////////////////  
-  - devicefacts_jinja2
+  #roles: 
+  #  #/////////////////////////////////////////////////////////////////
+  #  #Role 1
+  #  #Purpose of this role is to capture device facts and license related info
+  #  #This information will be used to prepare devices for the upgrade
+  #  #/////////////////////////////////////////////////////////////////  
+  #- devicefacts_jinja2
+
+  tasks:
+  - name: Get bigip config Information
+    bigip_device_info:
+      gather_subset: 
+      - system-info
+      - devices
+      - device-groups
+      provider: "{{ bigip_provider }}"
+    register: bigip_gather_var
+    retries: 3
+    delay: 3
+
+  - name: Save CSV headers
+    ansible.builtin.lineinfile:
+      dest: "{{ csv_path }}/{{ csv_filename }}"
+      line: "{{ headers }}"
+      create: true
+      state: present
+    delegate_to: localhost
+    run_once: true
+    
+  #- name: This can be used to print facts
+  #  debug:
+  #    var: bigip_gather_var
+  
+  - name: This can be used to print facts
+    debug:
+      var: bigip_gather_var['devices'][0]['hostname']
+
+  - name: This can be used to print facts
+    debug:
+      var: bigip_gather_var['system_info']['marketing_name']
+
+  - name: This can be used to print facts
+    debug:
+      var: bigip_gather_var['system_info']['product_version']
+
+  - name: This can be used to print facts
+    debug:
+      var: bigip_gather_var['system_info']['platform']
+
+  - name: This can be used to print facts
+    debug:
+      var: bigip_gather_var['system_info']['chassis_serial']
+
+  - name: This can be used to print facts
+    debug:
+      var: bigip_gather_var['devices'][0]['software_version']
+
+  - name: Build out CSV file
+    ansible.builtin.lineinfile:
+      dest: "{{ csv_path }}/{{ csv_filename }}"
+      line: "{{ bigip_gather_var['devices'][0]['hostname'] }},{{ bigip_gather_var['system_info']['platform'] }},{{ bigip_gather_var['devices'][0]['software_version'] }},{{ bigip_gather_var['system_info']['platform'] }},{{ bigip_gather_var['system_info']['chassis_serial'] }},{{ bigip_gather_var['system_info']['product_version'] }}"
+      create: true
+      state: present
+    delegate_to: localhost
+  
