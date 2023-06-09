@@ -28,4 +28,4 @@
     #Purpose of this role is to capture device facts and license related info
     #This information will be used to prepare devices for the upgrade
     #/////////////////////////////////////////////////////////////////  
-  - devicefacts
+  - devicefacts_jinja2
