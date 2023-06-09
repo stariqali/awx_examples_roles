@@ -21,6 +21,12 @@
     is_active: "{{ bigip_gather_var.devices | selectattr('self', 'equalto', 'yes') | map(attribute='failover_state') | first == 'active' }}"
     failover_device_group: "{{ bigip_gather_var.device_groups | selectattr('type', 'equalto', 'sync-failover')  | map(attribute='name') | first | default ('None') }}"
 
+    #email settings
+    email_subject: Device_Status
+    email_host: smtp.gmail.com
+    email_from: system@gmail.com
+    email_to: <username>@gmail.com
+
     csv_path: /tmp
     csv_filename: device_facts.csv
     headers: Hostname,Device Type,TMOS Tersion,Platform,Serial Number,Software Version
@@ -108,6 +114,13 @@
 #      host: "{{ email_host }}"
 #      from: "{{ email_from }}"
 #      port: 25
+###############################
+#      #using gmail
+###############################
+#      #port: 587
+#      #username: <testuser>@gmail.com
+#      #pasword: <your super secret password>
+###############################
 #      to: "{{ email_to }}"
 #      subject: "[Ansible] {{ email_subject }}"
 #      body: "{{ lookup('template', 'report.html.j2') }}"
