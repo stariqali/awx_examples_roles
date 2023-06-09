@@ -23,7 +23,7 @@
 
     csv_path: /tmp
     csv_filename: device_facts.csv
-    headers: Hostname,Device Type,TMOS Tersion,Platform, Serial Number, Software Version
+    headers: Hostname,Device Type,TMOS Tersion,Platform,Serial Number,Software Version
 
   #roles: 
   #  #/////////////////////////////////////////////////////////////////
